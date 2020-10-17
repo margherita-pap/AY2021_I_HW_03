@@ -13,6 +13,7 @@
 #include <inttypes.h>
 #include "UART_InterruptRoutine.h"
 #include "TIMER_InterruptRoutine.h"
+#include "RGBLedDriver.h"
 #include <stdio.h>
 
 uint8_t state=0;
@@ -99,8 +100,14 @@ int main(void)
            sprintf( message,"Received: %X !\r\n",packet[4]);
            UART_PutString(message);
            if(packet[4]==0xC0){   
-           UART_PutString("PAcchetto inviato");
-           state=IDLE;
+            UART_PutString("PAcchetto inviato");
+            Color newcolor;
+            newcolor.red=packet[1];
+            newcolor.green=packet[2];
+            newcolor.blu=packet[3];
+            RGBLed_WriteColor(newcolor);
+            RGBLed_Start();
+            state=IDLE;
             }
             else{
                 UART_PutString("TAIL SBAGLIATA");

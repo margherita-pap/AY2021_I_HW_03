@@ -11,6 +11,7 @@
 */
 #include "UART_InterruptRoutine.h" 
 #include "TIMER_InterruptRoutine.h"
+#include "RGBLedDriver.h"
 #include "UART.h"
 #include "stdio.h"
 //static char message[20] = {'\0'};
@@ -25,6 +26,7 @@ CY_ISR(Custom_UART_RX_ISR) {
     {
         case IDLE:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
+        RGBLed_Stop();    
         UART_PutString("Sono nella interrupt\r\n");    
         state=HEADER;
         }
