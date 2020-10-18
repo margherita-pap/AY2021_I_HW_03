@@ -25,6 +25,7 @@ int main(void)
     UART_Start();
     isr_UART_StartEx(Custom_UART_RX_ISR);
     isr_TIMER_StartEx(Custom_TIMER_5SEC_ISR);
+    RGBLed_Start();
     //UART_PutString("Please send Header byte!\r\n");
     state=0;
 
@@ -102,11 +103,11 @@ int main(void)
            if(packet[4]==0xC0){   
             UART_PutString("PAcchetto inviato");
             Color newcolor;
-            newcolor.red=packet[1];
-            newcolor.green=packet[2];
-            newcolor.blu=packet[3];
+            newcolor.red= (uint8_t)packet[1];
+            newcolor.green=(uint8_t) packet[2];
+            newcolor.blu=(uint8_t) packet[3];
             RGBLed_WriteColor(newcolor);
-            RGBLed_Start();
+            //RGBLed_Start();
             state=IDLE;
             }
             else{

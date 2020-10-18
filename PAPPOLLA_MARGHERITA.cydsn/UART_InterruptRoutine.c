@@ -26,7 +26,7 @@ CY_ISR(Custom_UART_RX_ISR) {
     {
         case IDLE:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        RGBLed_Stop();    
+        //RGBLed_Stop();    
         UART_PutString("Sono nella interrupt\r\n");    
         state=HEADER;
         }
