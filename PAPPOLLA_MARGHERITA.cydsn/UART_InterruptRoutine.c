@@ -14,20 +14,18 @@
 #include "RGBLedDriver.h"
 #include "UART.h"
 #include "stdio.h"
-//static char message[20] = {'\0'};
+
 extern uint8_t state;
 extern char packet[5];
 
 CY_ISR(Custom_UART_RX_ISR) {
-    //if (UART_ReadRxStatus() == UART_RX_STS_FIFO_NOTEMPTY) {
-    //sprintf(message, "Received: %c\r\n", UART_ReadRxData());
-    //UART_PutString(message);
+    
     switch(state)
     {
         case IDLE:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         //RGBLed_Stop();    
-        UART_PutString("Sono nella interrupt\r\n");    
+        //UART_PutString("Sono nella interrupt\r\n");    
         state=HEADER;
         }
         break;
@@ -37,7 +35,7 @@ CY_ISR(Custom_UART_RX_ISR) {
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
         Timer_WriteCounter(255);    
-        UART_PutString("Sono nella interrupt UART RED\r\n");    
+        //UART_PutString("Sono nella interrupt UART RED\r\n");    
         state=RED;
         }
         break;
@@ -45,7 +43,7 @@ CY_ISR(Custom_UART_RX_ISR) {
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
         Timer_WriteCounter(255); 
-        UART_PutString("Sono nella interrupt UART GREEN\r\n");    
+        //UART_PutString("Sono nella interrupt UART GREEN\r\n");    
         state=GREEN;
         }
         break;
@@ -53,7 +51,7 @@ CY_ISR(Custom_UART_RX_ISR) {
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
         Timer_WriteCounter(255);     
-        UART_PutString("Sono nella interrupt UART BLUE\r\n");    
+        //UART_PutString("Sono nella interrupt UART BLUE\r\n");    
         state=BLUE;
         }
         break;
@@ -61,7 +59,7 @@ CY_ISR(Custom_UART_RX_ISR) {
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
         Timer_WriteCounter(255);     
-        UART_PutString("Sono nella interrupt UART TAIL\r\n");    
+        //UART_PutString("Sono nella interrupt UART TAIL\r\n");    
         state=TAIL;
         }
         break;
