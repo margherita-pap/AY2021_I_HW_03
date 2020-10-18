@@ -16,6 +16,7 @@ CY_ISR(Custom_TIMER_5SEC_ISR){
     //Timer_ReadStatusRegister();
     if(state==HEADER){
         UART_PutString("Sono nella interrupt TIMER stato header");
+        UART_ClearRxBuffer();
         state=IDLE;
         Timer_ReadStatusRegister();
         Timer_Stop();
@@ -30,6 +31,7 @@ CY_ISR(Custom_TIMER_5SEC_ISR){
     }
     if(state==GREEN){
         UART_PutString("Sono nella interrupt TIMER stato GREEN");
+        UART_ClearRxBuffer();
         state=IDLE;
         Timer_ReadStatusRegister();
         Timer_Stop();
@@ -37,6 +39,7 @@ CY_ISR(Custom_TIMER_5SEC_ISR){
     }
     if(state==BLUE){
         UART_PutString("Sono nella interrupt TIMER stato BLUE");
+        UART_ClearRxBuffer();
         state=IDLE;
         Timer_ReadStatusRegister();
         Timer_Stop();

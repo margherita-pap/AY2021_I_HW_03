@@ -54,6 +54,7 @@ int main(void)
             }
             else{
                 UART_PutString("Haeder sbagliato\r\n");
+                UART_ClearRxBuffer();
                 state=IDLE;
             }
             while(state==HEADER);
@@ -101,7 +102,7 @@ int main(void)
            sprintf( message,"Received: %X !\r\n",packet[4]);
            UART_PutString(message);
            if(packet[4]==0xC0){   
-            UART_PutString("PAcchetto inviato");
+            UART_PutString("PAcchetto inviato\r\n");
             Color newcolor;
             newcolor.red= (uint8_t)packet[1];
             newcolor.green=(uint8_t) packet[2];
@@ -111,7 +112,8 @@ int main(void)
             state=IDLE;
             }
             else{
-                UART_PutString("TAIL SBAGLIATA");
+                UART_PutString("TAIL SBAGLIATA\r\n");
+                UART_ClearRxBuffer();
                 state=IDLE;
             }
         }
