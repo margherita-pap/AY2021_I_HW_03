@@ -45,11 +45,11 @@ int main(void)
           }
         if(state==HEADER){
             //UART_PutString("Sono nel main-header\r\n");
-            char message[20]={'\0'};
+            //char message[20]={'\0'};
             packet[0]=UART_ReadRxData();
             if(packet[0]== 0xA0){
-            sprintf( message,"Received: %X !\r\n",packet[0]);
-            UART_PutString(message);
+            //sprintf( message,"Received: %X !\r\n",packet[0]);
+            //UART_PutString(message);
             Timer_Start();
             }
             else{
@@ -61,21 +61,21 @@ int main(void)
         }
         if(state==RED){
             
-            UART_PutString("SEND RED BYTE\r\n");
-            char message[20]={'\0'};
+            //UART_PutString("SEND RED BYTE\r\n");
+            //char message[20]={'\0'};
             packet[1]=UART_ReadRxData();
-            sprintf( message,"Received: %X !\r\n",packet[1]);
-            UART_PutString(message);
+            //sprintf( message,"Received: %X !\r\n",packet[1]);
+            //UART_PutString(message);
             Timer_Start();
             while(state==RED);
         }
         if(state== GREEN){
             
-            UART_PutString("SEND GREEN BYTE \r\n");
-            char message[20]={'\0'};
+            //UART_PutString("SEND GREEN BYTE \r\n");
+            //char message[20]={'\0'};
             packet[2]=UART_ReadRxData();
-            sprintf( message,"Received: %X !\r\n",packet[2]);
-            UART_PutString(message);
+            //sprintf( message,"Received: %X !\r\n",packet[2]);
+            //UART_PutString(message);
             Timer_Start();
             while(state==GREEN);
         }
@@ -83,21 +83,21 @@ int main(void)
         
         if(state==BLUE){
             
-            UART_PutString("SEND BLUE BYTE\r\n");
-            char message[20]={'\0'};
+            //UART_PutString("SEND BLUE BYTE\r\n");
+            //char message[20]={'\0'};
             packet[3]=UART_ReadRxData();
-            sprintf( message,"Received: %X !\r\n",packet[3]);
-            UART_PutString(message);
+            //sprintf( message,"Received: %X !\r\n",packet[3]);
+            //UART_PutString(message);
             Timer_Start();
             while(state==BLUE);
             }
         
         if(state==TAIL){
-           UART_PutString("SEND TAIL BYTE\r\n");
-           char message[20]={'\0'};
+           //UART_PutString("SEND TAIL BYTE\r\n");
+           //char message[20]={'\0'};
            packet[4]=UART_ReadRxData();
-           sprintf( message,"Received: %X !\r\n",packet[4]);
-           UART_PutString(message);
+           //sprintf( message,"Received: %X !\r\n",packet[4]);
+           //UART_PutString(message);
            if(packet[4]==0xC0){   
             //UART_PutString("PAcchetto inviato\r\n");
             Color newcolor;
