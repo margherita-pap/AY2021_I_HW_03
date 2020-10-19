@@ -52,11 +52,18 @@ int main(void)
             //UART_PutString(message);
             Timer_Start();
             }
+            else if(packet[0]=='v'){
+                UART_PutString("RGB LED Program $$$");
+                UART_ClearRxBuffer();
+                state=IDLE;
+                packet[0]='\0';
+            }
             else{
                 UART_PutString("Haeder sbagliato\r\n");
                 UART_ClearRxBuffer();
                 state=IDLE;
             }
+            
             while(state==HEADER);
         }
         if(state==RED){
