@@ -8,6 +8,11 @@
  * WHICH IS THE PROPERTY OF your company.
  *
  * ========================================
+ *\file UART_interruptRoutine.c
+ *\Interrupt file that is executed each time we receive a byte. If we receive 1 byte within 5 sec, I stop 
+   the timer thanks to the function reset and i switch the state.
+ *\date: October 20, 2020
+ *\author: Margherita Pappolla
 */
 #include "UART_InterruptRoutine.h" 
 #include "TIMER_InterruptRoutine.h"
@@ -31,32 +36,24 @@ CY_ISR(Custom_UART_RX_ISR) {
         case HEADER:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         reset_timer();
-        //Timer_Stop();
-        //Timer_WriteCounter(255);    
         state=RED;
         }
         break;
         case RED:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        reset_timer();
-        //Timer_Stop();
-        //Timer_WriteCounter(255);     
+        reset_timer();  
         state=GREEN;
         }
         break;
         case GREEN:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        reset_timer();
-        //Timer_Stop();
-        //Timer_WriteCounter(255);       
+        reset_timer();      
         state=BLUE;
         }
         break;
         case BLUE:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        reset_timer();
-        //Timer_Stop();
-        //Timer_WriteCounter(255);      
+        reset_timer();     
         state=TAIL;
         }
         break;

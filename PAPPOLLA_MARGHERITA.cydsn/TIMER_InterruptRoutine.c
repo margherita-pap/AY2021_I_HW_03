@@ -8,6 +8,11 @@
  * WHICH IS THE PROPERTY OF your company.
  *
  * ========================================
+*\file TIMER_InterruptRoutines.c
+*\This interrupt is executed each time the timer counts 5 sec, if this ISR is executed
+  i have to go back to IDLE state and i send an error massage. 
+*\date: October 20, 2020
+*\author: Margherita Pappolla
 */
 #include "TIMER_InterruptRoutine.h"
 extern uint8_t state;
@@ -23,9 +28,7 @@ void back_to_idle(void){
     UART_ClearRxBuffer();
     state=IDLE;
     Timer_ReadStatusRegister();
-    reset_timer();
-    //Timer_Stop();
-    //Timer_WriteCounter(255);
+    reset_timer();    
 }
     
 

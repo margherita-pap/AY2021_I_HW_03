@@ -8,7 +8,23 @@
  * WHICH IS THE PROPERTY OF your company.
  *
  * ========================================
+*\file main.c
+*\Main source file for controlling RGB led color through UART communication
+*\date: October 20, 2020
+*\author: Margherita Pappolla
 */
+
+/*The code is organised in 6 states, each time the UART receives a byte the state switches. The reading of the byte 
+ *is done in the main function. The bytes sent are saved into an array of char and if the packet of data is sent correctly, these values
+ *are used to write a new compared value of the PWM components that drive the RGB LED changing the color.
+*/
+/*For the first byte received, we have 3 different possibilities, if the byte corresponds to 0xA0 it means 
+   *we received the right header byte and so all the other bytes can be received. Instaed if the header byte is wrong 
+   *the whole packet sent is discarded and we go back to IDLE state where we wait the arrival of a new packet of data.
+   *The last possibility is to received the character v, which allows the synchronization with the GUI interface.
+   *Starting from header byte until we received the tail byte, each time we read the byte the timer is started.     
+  */
+
 #include "project.h"
 #include <inttypes.h>
 #include "UART_InterruptRoutine.h"
@@ -33,6 +49,7 @@ int main(void)
             UART_PutString("Please send new packet of data!\r\n"); 
             while(state==IDLE);
           }
+  
         if(state==HEADER){
             packet[0]=UART_ReadRxData();
             if(packet[0]== 0xA0){
