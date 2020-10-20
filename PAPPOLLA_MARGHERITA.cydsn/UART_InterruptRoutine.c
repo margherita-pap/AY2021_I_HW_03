@@ -30,29 +30,33 @@ CY_ISR(Custom_UART_RX_ISR) {
         
         case HEADER:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        Timer_Stop();
-        Timer_WriteCounter(255);    
+        reset_timer();
+        //Timer_Stop();
+        //Timer_WriteCounter(255);    
         state=RED;
         }
         break;
         case RED:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        Timer_Stop();
-        Timer_WriteCounter(255);     
+        reset_timer();
+        //Timer_Stop();
+        //Timer_WriteCounter(255);     
         state=GREEN;
         }
         break;
         case GREEN:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        Timer_Stop();
-        Timer_WriteCounter(255);       
+        reset_timer();
+        //Timer_Stop();
+        //Timer_WriteCounter(255);       
         state=BLUE;
         }
         break;
         case BLUE:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        Timer_Stop();
-        Timer_WriteCounter(255);      
+        reset_timer();
+        //Timer_Stop();
+        //Timer_WriteCounter(255);      
         state=TAIL;
         }
         break;
