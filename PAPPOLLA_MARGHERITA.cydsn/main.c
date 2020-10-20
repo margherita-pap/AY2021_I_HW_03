@@ -21,45 +21,31 @@ char packet[5]={'\0'};
 
 int main(void)
 {
-    CyGlobalIntEnable; /* Enable global interrupts. */
+    CyGlobalIntEnable; 
     UART_Start();
     isr_UART_StartEx(Custom_UART_RX_ISR);
     isr_TIMER_StartEx(Custom_TIMER_5SEC_ISR);
     RGBLed_Start();
-    //UART_PutString("Please send Header byte!\r\n");
     state=0;
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-
     for(;;)
     {
         if(state== IDLE){
-           /* int i=0;
-            for(i=0; i<5;i++ ){
-                packet[i]='0';
-            }*/
-            //Timer_Stop();
-            
-            UART_PutString("Please send Header byte!\r\n"); 
+            UART_PutString("Please send new packet of data!\r\n"); 
             while(state==IDLE);
           }
         if(state==HEADER){
-            //UART_PutString("Sono nel main-header\r\n");
-            //char message[20]={'\0'};
             packet[0]=UART_ReadRxData();
             if(packet[0]== 0xA0){
-            //sprintf( message,"Received: %X !\r\n",packet[0]);
-            //UART_PutString(message);
             Timer_Start();
             }
             else if(packet[0]=='v'){
-                UART_PutString("RGB LED Program $$$");
+                UART_PutString("RGB LED Program $$$\r\n");
                 UART_ClearRxBuffer();
                 state=IDLE;
                 packet[0]='\0';
             }
             else{
-                UART_PutString("Haeder sbagliato\r\n");
+                UART_PutString("Haeder byte wrong, packet discarded!\r\n");
                 UART_ClearRxBuffer();
                 state=IDLE;
             }
@@ -67,46 +53,23 @@ int main(void)
             while(state==HEADER);
         }
         if(state==RED){
-            
-            //UART_PutString("SEND RED BYTE\r\n");
-            //char message[20]={'\0'};
             packet[1]=UART_ReadRxData();
-            //sprintf( message,"Received: %X !\r\n",packet[1]);
-            //UART_PutString(message);
             Timer_Start();
             while(state==RED);
         }
         if(state== GREEN){
-            
-            //UART_PutString("SEND GREEN BYTE \r\n");
-            //char message[20]={'\0'};
             packet[2]=UART_ReadRxData();
-            //sprintf( message,"Received: %X !\r\n",packet[2]);
-            //UART_PutString(message);
             Timer_Start();
             while(state==GREEN);
         }
-            
-        
         if(state==BLUE){
-            
-            //UART_PutString("SEND BLUE BYTE\r\n");
-            //char message[20]={'\0'};
             packet[3]=UART_ReadRxData();
-            //sprintf( message,"Received: %X !\r\n",packet[3]);
-            //UART_PutString(message);
             Timer_Start();
             while(state==BLUE);
             }
-        
         if(state==TAIL){
-           //UART_PutString("SEND TAIL BYTE\r\n");
-           //char message[20]={'\0'};
            packet[4]=UART_ReadRxData();
-           //sprintf( message,"Received: %X !\r\n",packet[4]);
-           //UART_PutString(message);
            if(packet[4]==0xC0){   
-            //UART_PutString("PAcchetto inviato\r\n");
             Color newcolor;
             newcolor.red= (uint8_t)packet[1];
             newcolor.green=(uint8_t) packet[2];
@@ -115,13 +78,11 @@ int main(void)
             state=IDLE;
             }
             else{
-                UART_PutString("TAIL SBAGLIATA\r\n");
+                UART_PutString("Tail byte wrong, packet discarded!\r\n");
                 UART_ClearRxBuffer();
                 state=IDLE;
             }
         }
-        
-        /* Place your application code here. */
     }
 }
 

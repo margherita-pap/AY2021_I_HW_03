@@ -10,12 +10,12 @@
  * ========================================
 */
 #include "TIMER_InterruptRoutine.h"
-//#include <inttypes.h>
 extern uint8_t state;
+
 CY_ISR(Custom_TIMER_5SEC_ISR){
-    //Timer_ReadStatusRegister();
+    
     if(state==HEADER){
-        //UART_PutString("Sono nella interrupt TIMER stato header");
+        UART_PutString("5 sec time out error!\r\n");
         UART_ClearRxBuffer();
         state=IDLE;
         Timer_ReadStatusRegister();
@@ -23,14 +23,14 @@ CY_ISR(Custom_TIMER_5SEC_ISR){
         Timer_WriteCounter(255);
     }
     if(state==RED){
-        //UART_PutString("Sono nella interrupt TIMER stato red");
+        UART_PutString("5 sec time out error!\r\n");
         state=IDLE;
         Timer_ReadStatusRegister();
         Timer_Stop();
         Timer_WriteCounter(255);
     }
     if(state==GREEN){
-        //UART_PutString("Sono nella interrupt TIMER stato GREEN");
+        UART_PutString("5 sec time out error!\r\n");
         UART_ClearRxBuffer();
         state=IDLE;
         Timer_ReadStatusRegister();
@@ -38,7 +38,7 @@ CY_ISR(Custom_TIMER_5SEC_ISR){
         Timer_WriteCounter(255);
     }
     if(state==BLUE){
-        //UART_PutString("Sono nella interrupt TIMER stato BLUE");
+        UART_PutString("5 sec time out error!\r\n");
         UART_ClearRxBuffer();
         state=IDLE;
         Timer_ReadStatusRegister();

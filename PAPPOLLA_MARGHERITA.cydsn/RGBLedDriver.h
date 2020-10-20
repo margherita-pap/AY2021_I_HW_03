@@ -13,19 +13,13 @@
     #define _RGB_LED_DRIVER_H_
     
     #include "project.h"
-    
-    /**
-    *   \brief Struct holding color data
-    */
+ 
     typedef struct {
         uint8_t red;    ///< Red value   0 - 255
         uint8_t green;  ///< Green value 0 - 255
         uint8_t blu;    ///< Blu value   0 - 255
     } Color;
     
-    /**
-    *   \brief Start RGB Led Driver.
-    */
     void RGBLed_Start(void);
     
     /**
@@ -33,7 +27,7 @@
     */
     void RGBLed_Stop(void);
     
-    /**
+    /** 
     *   \brief Write new color value.
     */
     void RGBLed_WriteColor(Color c);

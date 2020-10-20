@@ -23,43 +23,36 @@ CY_ISR(Custom_UART_RX_ISR) {
     switch(state)
     {
         case IDLE:
-        if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
-        //RGBLed_Stop();    
-        //UART_PutString("Sono nella interrupt\r\n");    
+        if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){ 
         state=HEADER;
         }
         break;
         
-    
         case HEADER:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
         Timer_WriteCounter(255);    
-        //UART_PutString("Sono nella interrupt UART RED\r\n");    
         state=RED;
         }
         break;
         case RED:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
-        Timer_WriteCounter(255); 
-        //UART_PutString("Sono nella interrupt UART GREEN\r\n");    
+        Timer_WriteCounter(255);     
         state=GREEN;
         }
         break;
         case GREEN:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
-        Timer_WriteCounter(255);     
-        //UART_PutString("Sono nella interrupt UART BLUE\r\n");    
+        Timer_WriteCounter(255);       
         state=BLUE;
         }
         break;
         case BLUE:
         if( UART_ReadRxStatus()==UART_RX_STS_FIFO_NOTEMPTY){
         Timer_Stop();
-        Timer_WriteCounter(255);     
-        //UART_PutString("Sono nella interrupt UART TAIL\r\n");    
+        Timer_WriteCounter(255);      
         state=TAIL;
         }
         break;
